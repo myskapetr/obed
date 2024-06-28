@@ -4,17 +4,18 @@ import org.jsoup.nodes.Document;
 
 public enum Pubs {
     Spojovna(new Spojovna(), "spojovna.png"),
+    Goodlunch(new Goodlunch(), "goodlunch.svg", false),
     Cube(new Cube(), "cube.png"),
+    JidloJihu(new JidloJihu(), "dragon.png"),
+    Fruitisimo(new Fruitisimo(), "fruitisimo.svg", false),
     NaRychte(new NaRychte(), "na-rychte2.svg"),
     Pepe(new Pepe(), "pepe.png"),
     Zatisi(new Zatisi(), "zatisi.png"),
-    JidloJihu(new JidloJihu(), "dragon.png"),
-    Fruitisimo(new Fruitisimo(), "fruitisimo.png"),
-    Goodlunch(new Goodlunch(), "goodlunch.png"),
     ;
     
     private MenuSupplier getMenu;
     private String icon;
+    private boolean shouldConnect = true;
     
     public static String[] rightsStr;
     public static String[] leftsStr;
@@ -33,8 +34,13 @@ public enum Pubs {
     }
     
     Pubs(MenuSupplier getMenu, String icon) {
+        this(getMenu, icon, true);
+    }
+
+    Pubs(MenuSupplier getMenu, String icon, boolean shouldConnect) {
         this.getMenu = getMenu;
         this.icon = icon;
+        this.shouldConnect = shouldConnect;
     }
     
     public String getIcon() {
@@ -50,5 +56,9 @@ public enum Pubs {
 
     public String parse(Document doc) {
         return getMenu.parse(doc);
+    }
+
+    public boolean shouldConnect() {
+        return shouldConnect;
     }
 }

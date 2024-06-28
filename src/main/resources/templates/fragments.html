@@ -14,11 +14,11 @@
 
 
 <div th:fragment="ajax_results" id="ajax_results">
-	<div th:replace="fragments::result ('G1 (' + ${NUM1} + ')' , ${RESULTS1})" />
+	<div th:replace="~{fragments::result ('G1 (' + ${NUM1} + ')' , ${RESULTS1})}" />
 	<div class="ui-grid-solo" th:if="${RESULTS2.size() > 0}">&nbsp;</div>
-	<div th:replace="fragments::votes (${HOSPODY}, ${VOTES}, ${CLIENT_ID})" />
+	<div th:replace="~{fragments::votes (${HOSPODY}, ${VOTES}, ${CLIENT_ID})}" />
 	<div class="ui-grid-solo" th:if="${RESULTS2.size() > 0}">&nbsp;</div>
-	<div th:replace="fragments::result ('G2 (' + ${NUM2} + ')', ${RESULTS2})"/>
+	<div th:replace="~{fragments::result ('G2 (' + ${NUM2} + ')', ${RESULTS2})}"/>
 </div>
 
 <div class="ui-grid-solo" th:fragment="result (grouplabel, results)"  th:if="${results.size() > 0}">
@@ -26,7 +26,7 @@
 		<h3><center><span th:text="${grouplabel}"/></center></h3>
 		<div th:each="result : ${results}">
 			<div th:if="${result.space}">&nbsp;</div>
-			<img th:src="'/images/' + ${result.icon}" class="hospoda-icon-mini" />
+			<img th:src="'/images/' + ${result.icon}" class="hospoda-icon-mini" th:title="${result.pub}" />
 			<b th:if="${result.bold}"><span
 				th:text="${result.pub}+' ('+${result.value}+')'" /></b> <span
 				th:unless="${result.bold}"
@@ -45,7 +45,7 @@
 					<td style="width: 6pt;"/>
 					<td style="min-width: 5em;"><b th:text="${voteKV.getValue().get(0).get('groupid').equals('0') ? 'User (G1)' : 'User (G2)'}"></b></td>
 					<td th:each="hospoda : ${hospody}"><center>
-							<img th:src="'/images/' + ${hospoda.icon}" class="hospoda-icon" />
+							<img th:src="'/images/' + ${hospoda.icon}" class="hospoda-icon" th:title="${hospoda.name()}" />
 						</center></td>
 					<td style="width: 32pt;" />
 				</tr>

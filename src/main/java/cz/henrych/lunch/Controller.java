@@ -347,7 +347,7 @@ public class Controller {
     }
 
     String resultsInner(Map<String, Object> model, String clientId) throws SQLException, JsonParseException, JsonMappingException, IOException {
-        fillDilbert(model);
+        //fillDilbert(model);
         fillMenus(model);
 
         fillResults(model);
@@ -835,20 +835,23 @@ public class Controller {
 
     private String getAndParseMenu(Pubs pub) {
         String url = pub.getUrl();
-        org.jsoup.Connection con = new HttpConnection();
-        if (proxy != null) {
-            final String[] split = proxy.split(":");
-            if (split.length == 2) {
-                String host = split[0];
-                int port = Integer.parseInt(split[1]);
-                con.proxy(host, port);
-            }
-        }
-        con.url(url);
         try {
-            return pub.parse(con.get());
-        } catch (IOException e) {
-            return "<a href=\"" + pub.getUrl() + "\">" + pub.getName() + "</a><br/>";
+            org.jsoup.nodes.Document doc = null;
+            if (pub.shouldConnect()) {
+                org.jsoup.Connection con = new HttpConnection();
+                if (proxy != null) {
+                    final String[] split = proxy.split(":");
+                    if (split.length == 2) {
+                        String host = split[0];
+                        int port = Integer.parseInt(split[1]);
+                        con.proxy(host, port);
+                    }
+                }
+                doc = con.url(url).get();
+            }
+            return pub.parse(doc);
+        } catch (Exception e) {
+            return "<a href=\"" + url + "\">" + pub.getName() + "</a><br/>";
         }
     }
 }

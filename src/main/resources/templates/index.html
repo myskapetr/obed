@@ -48,11 +48,11 @@
 			</form>
 
 			<div id="after-header">
-				<div th:replace="fragments::ajax_chat" />
+				<div th:replace="~{fragments::ajax_chat}" />
 
-				<div th:replace="fragments::food(${HOSPODYL}, ${VOTE}, true)" />
+				<div th:replace="~{fragments::food(${HOSPODYL}, ${VOTE}, true)}" />
 
-				<div th:replace="fragments::food(${HOSPODYR}, ${VOTE}, true)" />
+				<div th:replace="~{fragments::food(${HOSPODYR}, ${VOTE}, true)}" />
 
 
 			</div>
