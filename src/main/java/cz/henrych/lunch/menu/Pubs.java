@@ -1,30 +1,27 @@
 package cz.henrych.lunch.menu;
 
-import java.util.function.Supplier;
+import org.jsoup.nodes.Document;
 
 public enum Pubs {
-    NaRychte(new NaRychte(), "na-rychte2.svg"),
-    //Magico(new Magico(), "burger.gif"),
-    //NaSadce(new NaSadce(), "fish.png"),
     Spojovna(new Spojovna(), "spojovna.png"),
-    Pub(new Pub(), "pub.png"),
+    Cube(new Cube(), "cube.png"),
+    NaRychte(new NaRychte(), "na-rychte2.svg"),
     Pepe(new Pepe(), "pepe.png"),
     Zatisi(new Zatisi(), "zatisi.png"),
-    //Jankovna(new Jankovna(), "jankovna.png"),
-    //Presto(new Presto(), "presto.png"),
-    Stopka(new Stopka(), "stop.svg"),
-    JidloJihu(new JidloJihu(), "dragon.png")
+    JidloJihu(new JidloJihu(), "dragon.png"),
+    Fruitisimo(new Fruitisimo(), "fruitisimo.png"),
+    Goodlunch(new Goodlunch(), "goodlunch.png"),
     ;
     
-    private Supplier<String> getMenu;
+    private MenuSupplier getMenu;
     private String icon;
     
     public static String[] rightsStr;
     public static String[] leftsStr;
     
     static {
-        Pubs[] r = new Pubs[] { NaRychte, Spojovna, Zatisi, };
-        Pubs[] l = new Pubs[] { Pub, /*Presto,*/ Pepe,  Stopka, JidloJihu };
+        Pubs[] r = new Pubs[] { Spojovna, Goodlunch, Fruitisimo, NaRychte };
+        Pubs[] l = new Pubs[] { Cube, JidloJihu, Pepe, Zatisi };
         rightsStr = new String[r.length];
         leftsStr = new String[l.length];
         for (int i=0; i<r.length; i++) {
@@ -35,16 +32,23 @@ public enum Pubs {
         }
     }
     
-    Pubs(Supplier<String> getMenu, String icon) {
+    Pubs(MenuSupplier getMenu, String icon) {
         this.getMenu = getMenu;
         this.icon = icon;
     }
     
-    public String getMenu() {
-        return getMenu.get();
-    }
-    
     public String getIcon() {
         return icon;
+    }
+
+    public String getName() {
+        return getMenu.getName();
+    }
+    public String getUrl() {
+        return getMenu.getUrl();
+    }
+
+    public String parse(Document doc) {
+        return getMenu.parse(doc);
     }
 }
